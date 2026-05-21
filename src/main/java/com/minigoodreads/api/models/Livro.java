@@ -1,5 +1,7 @@
 package com.minigoodreads.api.models;
 
+import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.DadosLivro;
 import com.minigoodreads.api.DTO.DadosNovoLivro;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -19,6 +21,7 @@ public class Livro {
     private String autor;
     private String editora;
     private String genero;
+    private String sinopse;
     private int anoPublicacao;
 
     public Livro(DadosNovoLivro dados) {
@@ -26,6 +29,28 @@ public class Livro {
         this.autor = dados.autor();
         this.editora = dados.editora();
         this.genero = dados.genero();
+        this.sinopse = dados.sinopse();
         this.anoPublicacao = dados.anoPublicacao();
+    }
+
+    public void atualizarDados(DadosAtualizacaoLivro dados) {
+        if (dados.titulo() != null)  {
+            this.titulo = dados.titulo();
+        }
+        if (dados.autor() != null)  {
+            this.autor = dados.autor();
+        }
+        if (dados.editora() != null)  {
+            this.editora = dados.editora();
+        }
+        if (dados.genero() != null)  {
+            this.genero = dados.genero();
+        }
+        if (dados.anoPublicacao() != null)  {
+            this.titulo = dados.titulo();
+        }
+        if (dados.sinopse() != null)  {
+            this.sinopse = dados.sinopse();
+        }
     }
 }

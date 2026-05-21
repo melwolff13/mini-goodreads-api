@@ -1,5 +1,6 @@
 package com.minigoodreads.api.service;
 
+import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
 import com.minigoodreads.api.DTO.DadosLivro;
 import com.minigoodreads.api.DTO.DadosNovoLivro;
 import com.minigoodreads.api.models.Livro;
@@ -7,6 +8,7 @@ import com.minigoodreads.api.repositories.LivroRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LivroService {
@@ -16,13 +18,21 @@ public class LivroService {
     public DadosLivro registrarLivro(DadosNovoLivro dados) {
         var novoLivro = new Livro(dados);
         livroRepository.save(novoLivro);
-
         return new DadosLivro(novoLivro);
     }
 
     public DadosLivro detalharLivro(Long id) {
         var livro = livroRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
+        return new DadosLivro(livro);
+    }
+
+    @Transactional
+    public DadosLivro atualizarLivro(Long id, DadosAtualizacaoLivro dados) {
+        var livro = livroRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
+        livro.atualizarDados(dados);
+
         return new DadosLivro(livro);
     }
 }

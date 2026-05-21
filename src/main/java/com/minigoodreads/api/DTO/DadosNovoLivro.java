@@ -12,6 +12,8 @@ public record DadosNovoLivro(
         String editora,
         @NotBlank
         String genero,
+        @NotBlank
+        String sinopse,
         @NotNull
         Integer anoPublicacao
 ) { }

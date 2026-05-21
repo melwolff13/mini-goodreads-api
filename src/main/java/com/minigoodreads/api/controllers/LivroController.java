@@ -1,5 +1,7 @@
 package com.minigoodreads.api.controllers;
 
+import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.DadosLivro;
 import com.minigoodreads.api.DTO.DadosNovoLivro;
 import com.minigoodreads.api.service.LivroService;
 import jakarta.validation.Valid;
@@ -19,8 +21,13 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalhar(@PathVariable Long id) {
+    public ResponseEntity<DadosLivro> detalhar(@PathVariable Long id) {
         return ResponseEntity.ok(livroService.detalharLivro(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DadosLivro> atualizar(@PathVariable Long id, @RequestBody DadosAtualizacaoLivro dados) {
+        return ResponseEntity.ok(livroService.atualizarLivro(id, dados));
     }
 
 }
