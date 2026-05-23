@@ -20,7 +20,8 @@ public class Livro {
     private String titulo;
     private String autor;
     private String editora;
-    private String genero;
+    @Enumerated(value = EnumType.STRING)
+    private Genero genero;
     private String sinopse;
     private int anoPublicacao;
 
@@ -28,7 +29,7 @@ public class Livro {
         this.titulo = dados.titulo();
         this.autor = dados.autor();
         this.editora = dados.editora();
-        this.genero = dados.genero();
+        this.genero = Genero.toEnum(dados.genero());
         this.sinopse = dados.sinopse();
         this.anoPublicacao = dados.anoPublicacao();
     }
@@ -44,7 +45,7 @@ public class Livro {
             this.editora = dados.editora();
         }
         if (dados.genero() != null)  {
-            this.genero = dados.genero();
+            this.genero = Genero.toEnum(dados.genero());
         }
         if (dados.anoPublicacao() != null)  {
             this.titulo = dados.titulo();
