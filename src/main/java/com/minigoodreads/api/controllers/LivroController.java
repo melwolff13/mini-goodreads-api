@@ -6,6 +6,9 @@ import com.minigoodreads.api.DTO.DadosNovoLivro;
 import com.minigoodreads.api.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,11 @@ public class LivroController {
     @GetMapping("/{id}")
     public ResponseEntity<DadosLivro> detalhar(@PathVariable Long id) {
         return ResponseEntity.ok(livroService.detalharLivro(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DadosLivro>> listar(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao) {
+        return ResponseEntity.ok(livroService.listarLivros(paginacao));
     }
 
     @PutMapping("/{id}")
