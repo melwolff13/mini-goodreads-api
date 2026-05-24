@@ -42,4 +42,12 @@ public class LivroService {
 
         return new DadosLivro(livro);
     }
+
+    public ResponseEntity<?> deletarLivro(Long id) {
+        var livro = livroRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
+        livroRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

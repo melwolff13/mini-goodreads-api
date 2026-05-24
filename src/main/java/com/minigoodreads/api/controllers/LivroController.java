@@ -38,4 +38,9 @@ public class LivroController {
         return ResponseEntity.ok(livroService.atualizarLivro(id, dados));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        return livroService.deletarLivro(id);
+    }
+
 }
