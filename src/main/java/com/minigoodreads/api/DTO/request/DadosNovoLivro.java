@@ -1,4 +1,4 @@
-package com.minigoodreads.api.DTO;
+package com.minigoodreads.api.DTO.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

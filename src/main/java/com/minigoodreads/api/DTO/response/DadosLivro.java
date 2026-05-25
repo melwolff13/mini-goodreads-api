@@ -1,4 +1,4 @@
-package com.minigoodreads.api.DTO;
+package com.minigoodreads.api.DTO.response;
 
 import com.minigoodreads.api.models.Genero;
 import com.minigoodreads.api.models.Livro;

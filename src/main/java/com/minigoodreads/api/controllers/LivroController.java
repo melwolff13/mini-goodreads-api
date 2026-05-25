@@ -1,8 +1,8 @@
 package com.minigoodreads.api.controllers;
 
-import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
-import com.minigoodreads.api.DTO.DadosLivro;
-import com.minigoodreads.api.DTO.DadosNovoLivro;
+import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.response.DadosLivro;
+import com.minigoodreads.api.DTO.request.DadosNovoLivro;
 import com.minigoodreads.api.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

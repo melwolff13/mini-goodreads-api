@@ -1,8 +1,8 @@
 package com.minigoodreads.api.service;
 
-import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
-import com.minigoodreads.api.DTO.DadosLivro;
-import com.minigoodreads.api.DTO.DadosNovoLivro;
+import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.response.DadosLivro;
+import com.minigoodreads.api.DTO.request.DadosNovoLivro;
 import com.minigoodreads.api.models.Livro;
 import com.minigoodreads.api.repositories.LivroRepository;
 import jakarta.persistence.EntityNotFoundException;

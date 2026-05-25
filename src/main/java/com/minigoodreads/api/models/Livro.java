@@ -1,10 +1,8 @@
 package com.minigoodreads.api.models;
 
-import com.minigoodreads.api.DTO.DadosAtualizacaoLivro;
-import com.minigoodreads.api.DTO.DadosLivro;
-import com.minigoodreads.api.DTO.DadosNovoLivro;
+import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.request.DadosNovoLivro;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

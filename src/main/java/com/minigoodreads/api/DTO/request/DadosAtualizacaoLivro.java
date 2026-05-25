@@ -1,4 +1,4 @@
-package com.minigoodreads.api.DTO;
+package com.minigoodreads.api.DTO.request;
 
 public record DadosAtualizacaoLivro(
         String titulo,
