@@ -1,5 +1,6 @@
 package com.minigoodreads.api.models;
 
+import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,4 +22,11 @@ public class Avaliacao {
     private Usuario usuario;
     private int estrelas;
     private String comentario;
+
+    public Avaliacao(Livro livro, Usuario usuario, DadosNovaAvaliacao dados) {
+        this.comentario = dados.comentario();
+        this.estrelas = dados.estrelas();
+        this.livro = livro;
+        this.usuario = usuario;
+    }
 }

@@ -14,3 +14,9 @@ INSERT INTO livros (titulo, autor, editora, genero, sinopse, ano_publicacao) VAL
     ('Steve Jobs', 'Walter Isaacson', 'Simon & Schuster', 'BIOGRAFIA', 'A história definitiva do cofundador da Apple, baseada em entrevistas exclusivas com Jobs e pessoas próximas, revelando sua genialidade, perfeccionismo e contradições.', 2011),
     ('O Cortiço', 'Aluísio Azevedo', 'Garnier', 'DRAMA', 'A vida coletiva e as relações de poder em um cortiço no Rio de Janeiro do século XIX, retratando com realismo a luta pela sobrevivência e a degradação humana.', 1890),
     ('Jogador Número Um', 'Ernest Cline', 'Crown Publishers', 'FICCAO_CIENTIFICA', 'Em 2045, o mundo vive no OASIS, uma realidade virtual. Quando seu criador morre e esconde um tesouro no jogo, uma corrida global e perigosa tem início.', 2011);
+
+INSERT INTO usuarios (email, nick, senha) VALUES
+    ('joao@email.com', 'joaozinho', '123456'),
+    ('maria@email.com', 'mariazinha', '123456'),
+    ('carlos@email.com', 'carlao', '123456'),
+    ('ana@email.com', 'aninha', '123456');
