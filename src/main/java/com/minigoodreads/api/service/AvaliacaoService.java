@@ -1,5 +1,6 @@
 package com.minigoodreads.api.service;
 
+import com.minigoodreads.api.DTO.request.DadosAtualizacaoAvaliacao;
 import com.minigoodreads.api.DTO.response.DadosAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
 import com.minigoodreads.api.models.Avaliacao;
@@ -7,10 +8,12 @@ import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
 import com.minigoodreads.api.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AvaliacaoService {
@@ -37,5 +40,14 @@ public class AvaliacaoService {
 
     public Page<DadosAvaliacao> listarAvaliacoesPorUsuario(Long usuarioId, Pageable paginacao) {
         return avaliacaoRepository.findAllByUsuarioId(usuarioId, paginacao).map(DadosAvaliacao::new);
+    }
+
+    @Transactional
+    public DadosAvaliacao atualizarInformacoes(Long id, @Valid DadosAtualizacaoAvaliacao dados) {
+        var avaliacao = avaliacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
+        avaliacao.atualizarInformacoes(dados);
+
+        return new DadosAvaliacao(avaliacao);
     }
 }

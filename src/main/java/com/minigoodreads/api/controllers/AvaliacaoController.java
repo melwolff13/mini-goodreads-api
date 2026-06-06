@@ -1,5 +1,6 @@
 package com.minigoodreads.api.controllers;
 
+import com.minigoodreads.api.DTO.request.DadosAtualizacaoAvaliacao;
 import com.minigoodreads.api.DTO.response.DadosAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
 import com.minigoodreads.api.service.AvaliacaoService;
@@ -30,5 +31,10 @@ public class AvaliacaoController {
     @GetMapping("/usuarios/{usuarioId}")
     public ResponseEntity<Page<DadosAvaliacao>> listarPorUsuario(@PathVariable Long usuarioId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
         return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorUsuario(usuarioId, paginacao));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DadosAvaliacao> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoAvaliacao dados) {
+        return ResponseEntity.ok(avaliacaoService.atualizarInformacoes(id, dados));
     }
 }
