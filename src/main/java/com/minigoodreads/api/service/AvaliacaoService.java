@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +44,19 @@ public class AvaliacaoService {
     }
 
     @Transactional
-    public DadosAvaliacao atualizarInformacoes(Long id, @Valid DadosAtualizacaoAvaliacao dados) {
+    public DadosAvaliacao atualizarInformacoes(Long id, DadosAtualizacaoAvaliacao dados) {
         var avaliacao = avaliacaoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
         avaliacao.atualizarInformacoes(dados);
 
         return new DadosAvaliacao(avaliacao);
+    }
+
+    public ResponseEntity<?> deletarAvaliacao(Long id) {
+        avaliacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
+        avaliacaoRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

@@ -37,4 +37,9 @@ public class AvaliacaoController {
     public ResponseEntity<DadosAvaliacao> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoAvaliacao dados) {
         return ResponseEntity.ok(avaliacaoService.atualizarInformacoes(id, dados));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        return avaliacaoService.deletarAvaliacao(id);
+    }
 }
