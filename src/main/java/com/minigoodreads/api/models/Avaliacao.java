@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "avaliacoes")
 @Data
@@ -22,11 +24,13 @@ public class Avaliacao {
     private Usuario usuario;
     private int estrelas;
     private String comentario;
+    private LocalDateTime data;
 
     public Avaliacao(Livro livro, Usuario usuario, DadosNovaAvaliacao dados) {
         this.comentario = dados.comentario();
         this.estrelas = dados.estrelas();
         this.livro = livro;
         this.usuario = usuario;
+        this.data = LocalDateTime.now();
     }
 }

@@ -8,6 +8,8 @@ import com.minigoodreads.api.repositories.LivroRepository;
 import com.minigoodreads.api.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +29,9 @@ public class AvaliacaoService {
         avaliacaoRepository.save(novaAvaliacao);
 
         return new DadosAvaliacao(novaAvaliacao);
+    }
+
+    public Page<DadosAvaliacao> listarAvaliacoes(Long livroId, Pageable paginacao) {
+        return avaliacaoRepository.findAllByLivroId(livroId, paginacao).map(DadosAvaliacao::new);
     }
 }
