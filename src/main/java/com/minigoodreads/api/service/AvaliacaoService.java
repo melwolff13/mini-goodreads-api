@@ -31,7 +31,11 @@ public class AvaliacaoService {
         return new DadosAvaliacao(novaAvaliacao);
     }
 
-    public Page<DadosAvaliacao> listarAvaliacoes(Long livroId, Pageable paginacao) {
+    public Page<DadosAvaliacao> listarAvaliacoesPorLivro(Long livroId, Pageable paginacao) {
         return avaliacaoRepository.findAllByLivroId(livroId, paginacao).map(DadosAvaliacao::new);
+    }
+
+    public Page<DadosAvaliacao> listarAvaliacoesPorUsuario(Long usuarioId, Pageable paginacao) {
+        return avaliacaoRepository.findAllByUsuarioId(usuarioId, paginacao).map(DadosAvaliacao::new);
     }
 }

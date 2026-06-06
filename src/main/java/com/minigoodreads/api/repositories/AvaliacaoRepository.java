@@ -1,5 +1,6 @@
 package com.minigoodreads.api.repositories;
 
+import aj.org.objectweb.asm.commons.Remapper;
 import com.minigoodreads.api.models.Avaliacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao,Long> {
 
     Page<Avaliacao> findAllByLivroId(Long livroId, Pageable paginacao);
+
+    Page<Avaliacao> findAllByUsuarioId(Long usuarioId, Pageable paginacao);
 }

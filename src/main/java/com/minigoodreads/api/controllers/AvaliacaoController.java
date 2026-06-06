@@ -23,7 +23,12 @@ public class AvaliacaoController {
     }
 
     @GetMapping("/livros/{livroId}")
-    public ResponseEntity<Page<DadosAvaliacao>> listar(@PathVariable Long livroId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
-        return ResponseEntity.ok(avaliacaoService.listarAvaliacoes(livroId, paginacao));
+    public ResponseEntity<Page<DadosAvaliacao>> listarPorLivro(@PathVariable Long livroId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
+        return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorLivro(livroId, paginacao));
+    }
+
+    @GetMapping("/usuarios/{usuarioId}")
+    public ResponseEntity<Page<DadosAvaliacao>> listarPorUsuario(@PathVariable Long usuarioId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
+        return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorUsuario(usuarioId, paginacao));
     }
 }

@@ -2,7 +2,6 @@ package com.minigoodreads.api.DTO.response;
 
 import com.minigoodreads.api.models.Avaliacao;
 import com.minigoodreads.api.models.Livro;
-import com.minigoodreads.api.models.Usuario;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +10,10 @@ public record DadosAvaliacao(
         LocalDateTime data,
         Integer estrelas,
         String comentario,
-        Usuario usuario,
-        Livro livro
+        DadosUsuario usuario,
+        DadosLivro livro
 ) {
     public DadosAvaliacao(Avaliacao avaliacao) {
-        this(avaliacao.getId(), avaliacao.getData(), avaliacao.getEstrelas(), avaliacao.getComentario(), avaliacao.getUsuario(), avaliacao.getLivro());
+        this(avaliacao.getId(), avaliacao.getData(), avaliacao.getEstrelas(), avaliacao.getComentario(), new DadosUsuario(avaliacao.getUsuario()), new DadosLivro(avaliacao.getLivro()));
     }
 }
