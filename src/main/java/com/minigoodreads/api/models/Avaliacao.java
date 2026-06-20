@@ -25,14 +25,18 @@ public class Avaliacao {
     private Usuario usuario;
     private int estrelas;
     private String comentario;
-    private LocalDateTime data;
+    private LocalDateTime data_publicacao;
+    private boolean editada;
+    private LocalDateTime data_edicao;
 
     public Avaliacao(Livro livro, Usuario usuario, DadosNovaAvaliacao dados) {
         this.comentario = dados.comentario();
         this.estrelas = dados.estrelas();
         this.livro = livro;
         this.usuario = usuario;
-        this.data = LocalDateTime.now();
+        this.data_publicacao = LocalDateTime.now();
+        this.editada = false;
+        this.data_edicao = null;
     }
 
     public void atualizarInformacoes(DadosAtualizacaoAvaliacao dados) {
@@ -42,5 +46,7 @@ public class Avaliacao {
         if (dados.comentario() != null) {
             this.comentario = dados.comentario();
         }
+        this.data_edicao = LocalDateTime.now();
+        this.editada = true;
     }
 }

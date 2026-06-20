@@ -8,7 +8,6 @@ import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
 import com.minigoodreads.api.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +27,9 @@ public class AvaliacaoService {
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
         var usuario = usuarioRepository.findById(dados.usuarioId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        if (avaliacaoRepository.verificaUnicidade(livroAvaliado.getId(), usuario.getId()).isPresent()) {
+            throw new RuntimeException("O usuário já avaliou este livro.");
+        }
 
         var novaAvaliacao = new Avaliacao(livroAvaliado, usuario, dados);
         avaliacaoRepository.save(novaAvaliacao);
