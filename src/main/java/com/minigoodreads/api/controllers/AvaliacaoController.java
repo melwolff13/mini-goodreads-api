@@ -13,32 +13,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("avaliacoes")
+@RequestMapping()
 public class AvaliacaoController {
 
     @Autowired private AvaliacaoService avaliacaoService;
 
-    @PostMapping("/livros/{livroId}")
+    @PostMapping("/livros/{livroId}/avaliacoes")
     public ResponseEntity<DadosAvaliacao> avaliar(@PathVariable Long livroId, @RequestBody @Valid DadosNovaAvaliacao dados) {
         return ResponseEntity.ok(avaliacaoService.adicionarAvaliacao(livroId, dados));
     }
 
-    @GetMapping("/livros/{livroId}")
+    @GetMapping("/livros/{livroId}/avaliacoes")
     public ResponseEntity<Page<DadosAvaliacao>> listarPorLivro(@PathVariable Long livroId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
         return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorLivro(livroId, paginacao));
     }
 
-    @GetMapping("/usuarios/{usuarioId}")
+    @GetMapping("/usuarios/{usuarioId}/avaliacoes")
     public ResponseEntity<Page<DadosAvaliacao>> listarPorUsuario(@PathVariable Long usuarioId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
         return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorUsuario(usuarioId, paginacao));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/avaliacoes/{id}")
     public ResponseEntity<DadosAvaliacao> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoAvaliacao dados) {
         return ResponseEntity.ok(avaliacaoService.atualizarInformacoes(id, dados));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/avaliacoes/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         return avaliacaoService.deletarAvaliacao(id);
     }
