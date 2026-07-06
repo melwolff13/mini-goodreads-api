@@ -23,4 +23,14 @@ public class ListaDeLeitura {
     private Livro livro;
     @Enumerated(EnumType.STRING)
     private StatusLeitura status;
+
+    public ListaDeLeitura(Usuario usuario, Livro livro, StatusLeitura status) {
+        this.usuario = usuario;
+        this.livro = livro;
+        this.status = status;
+    }
+
+    public void atualizarStatus(StatusLeitura novoStatus) {
+        this.status = novoStatus;
+    }
 }
