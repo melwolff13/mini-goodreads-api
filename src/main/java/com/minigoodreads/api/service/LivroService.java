@@ -1,10 +1,12 @@
 package com.minigoodreads.api.service;
 
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.request.LivroFiltro;
 import com.minigoodreads.api.DTO.response.DadosLivro;
 import com.minigoodreads.api.DTO.request.DadosNovoLivro;
 import com.minigoodreads.api.DTO.response.DadosResumoLivro;
 import com.minigoodreads.api.models.Livro;
+import com.minigoodreads.api.models.LivroSpec;
 import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,8 +37,9 @@ public class LivroService {
         return new DadosLivro(livro, notaMedia, totalAvaliacoes);
     }
 
-    public Page<DadosResumoLivro> listarLivros(Pageable paginacao) {
-        return livroRepository.findAll(paginacao).map(DadosResumoLivro::new);
+    public Page<DadosResumoLivro> listarLivros(LivroFiltro filtro, Pageable paginacao) {
+        return livroRepository.findAll(LivroSpec.comFiltros(filtro), paginacao)
+                .map(DadosResumoLivro::new);
     }
 
     @Transactional

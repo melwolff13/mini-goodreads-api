@@ -1,6 +1,7 @@
 package com.minigoodreads.api.controllers;
 
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
+import com.minigoodreads.api.DTO.request.LivroFiltro;
 import com.minigoodreads.api.DTO.response.DadosLivro;
 import com.minigoodreads.api.DTO.request.DadosNovoLivro;
 import com.minigoodreads.api.DTO.response.DadosResumoLivro;
@@ -30,8 +31,8 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosResumoLivro>> listar(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao) {
-        return ResponseEntity.ok(livroService.listarLivros(paginacao));
+    public ResponseEntity<Page<DadosResumoLivro>> listar(LivroFiltro filtro, @PageableDefault(size = 10, sort = "titulo") Pageable paginacao) {
+        return ResponseEntity.ok(livroService.listarLivros(filtro, paginacao));
     }
 
     @PutMapping("/{id}")
