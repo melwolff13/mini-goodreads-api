@@ -18,4 +18,10 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao,Long> {
 
     @Query("select a from Avaliacao a where a.livro.id = :livroId and a.usuario.id = :usuarioId")
     Optional<Avaliacao> verificaUnicidade(Long livroId, Long usuarioId);
+
+    @Query("select ROUND(AVG(a.estrelas), 2) from Avaliacao a where a.livro.id = :id")
+    Optional<Double> obterNotaMedia(Long id);
+
+    @Query("select COUNT(*) from Avaliacao a where a.livro.id = :id")
+    Integer obterTotalAvaliacoes(Long id);
 }

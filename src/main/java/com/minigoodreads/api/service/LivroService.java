@@ -3,7 +3,9 @@ package com.minigoodreads.api.service;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
 import com.minigoodreads.api.DTO.response.DadosLivro;
 import com.minigoodreads.api.DTO.request.DadosNovoLivro;
+import com.minigoodreads.api.DTO.response.DadosResumoLivro;
 import com.minigoodreads.api.models.Livro;
+import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +19,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class LivroService {
 
     @Autowired private LivroRepository livroRepository;
+    @Autowired private AvaliacaoRepository avaliacaoRepository;
 
     public DadosLivro registrarLivro(DadosNovoLivro dados) {
         var novoLivro = new Livro(dados);
         livroRepository.save(novoLivro);
-        return new DadosLivro(novoLivro);
+        return new DadosLivro(novoLivro, 0.0, 0);
     }
 
     public DadosLivro detalharLivro(Long id) {
         var livro = livroRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
-        return new DadosLivro(livro);
+        var notaMedia = obterNotaMedia(id);
+        var totalAvaliacoes = obterTotalAvaliacoes(id);
+        return new DadosLivro(livro, notaMedia, totalAvaliacoes);
     }
 
-    public Page<DadosLivro> listarLivros(Pageable paginacao) {
-        return livroRepository.findAll(paginacao).map(DadosLivro::new);
+    public Page<DadosResumoLivro> listarLivros(Pageable paginacao) {
+        return livroRepository.findAll(paginacao).map(DadosResumoLivro::new);
     }
 
     @Transactional
@@ -40,7 +45,7 @@ public class LivroService {
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
         livro.atualizarDados(dados);
 
-        return new DadosLivro(livro);
+        return new DadosLivro(livro, obterNotaMedia(id), obterTotalAvaliacoes(id));
     }
 
     public ResponseEntity<?> deletarLivro(Long id) {
@@ -49,5 +54,13 @@ public class LivroService {
         livroRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    private double obterNotaMedia(Long livroId) {
+        return avaliacaoRepository.obterNotaMedia(livroId).orElse(0.0);
+    }
+
+    private int obterTotalAvaliacoes(Long livroId) {
+        return avaliacaoRepository.obterTotalAvaliacoes(livroId);
     }
 }

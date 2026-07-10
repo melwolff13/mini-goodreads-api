@@ -3,6 +3,7 @@ package com.minigoodreads.api.controllers;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
 import com.minigoodreads.api.DTO.response.DadosLivro;
 import com.minigoodreads.api.DTO.request.DadosNovoLivro;
+import com.minigoodreads.api.DTO.response.DadosResumoLivro;
 import com.minigoodreads.api.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosLivro>> listar(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao) {
+    public ResponseEntity<Page<DadosResumoLivro>> listar(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao) {
         return ResponseEntity.ok(livroService.listarLivros(paginacao));
     }
 

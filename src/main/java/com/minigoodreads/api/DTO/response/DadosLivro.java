@@ -10,9 +10,21 @@ public record DadosLivro(
         String editora,
         Genero genero,
         String sinopse,
-        Integer anoPublicacao
+        Integer anoPublicacao,
+        Double notaMedia,
+        Integer totalAvaliacoes
 ) {
-    public DadosLivro(Livro livro) {
-        this(livro.getId(), livro.getTitulo(), livro.getAutor(), livro.getEditora(), livro.getGenero(), livro.getSinopse(), livro.getAnoPublicacao());
+    public DadosLivro(Livro livro, double notaMedia, int totalAvaliacoes) {
+        this(
+                livro.getId(),
+                livro.getTitulo(),
+                livro.getAutor(),
+                livro.getEditora(),
+                livro.getGenero(),
+                livro.getSinopse(),
+                livro.getAnoPublicacao(),
+                notaMedia,
+                totalAvaliacoes
+        );
     }
 }

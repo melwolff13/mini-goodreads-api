@@ -10,7 +10,7 @@ public record DadosAvaliacao(
         Integer estrelas,
         String comentario,
         DadosUsuario usuario,
-        DadosLivro livro,
+        DadosResumoLivro livro,
         Boolean editada,
         LocalDateTime data_edicao
 ) {
@@ -21,7 +21,7 @@ public record DadosAvaliacao(
                 avaliacao.getEstrelas(),
                 avaliacao.getComentario(),
                 new DadosUsuario(avaliacao.getUsuario()),
-                new DadosLivro(avaliacao.getLivro()),
+                new DadosResumoLivro(avaliacao.getLivro()),
                 avaliacao.isEditada(),
                 avaliacao.getData_edicao()
         );
