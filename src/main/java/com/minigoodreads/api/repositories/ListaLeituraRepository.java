@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ListaLeituraRepository extends JpaRepository<ListaDeLeitura, Long> {
     Page<ListaDeLeitura> findAllByUsuarioId(Long usuarioId, Pageable paginacao);
+
+    boolean existsByUsuarioIdAndLivroId(Long usuarioId, Long livroId);
 }

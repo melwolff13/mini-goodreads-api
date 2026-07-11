@@ -3,6 +3,7 @@ package com.minigoodreads.api.service;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoAvaliacao;
 import com.minigoodreads.api.DTO.response.DadosAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
+import com.minigoodreads.api.exceptions.ConflitoException;
 import com.minigoodreads.api.models.Avaliacao;
 import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
@@ -23,13 +24,14 @@ public class AvaliacaoService {
     @Autowired private UsuarioRepository usuarioRepository;
 
     public DadosAvaliacao adicionarAvaliacao(Long livroId, DadosNovaAvaliacao dados) {
+        if (avaliacaoRepository.existsByLivroIdAndUsuarioId(livroId, dados.usuarioId())) {
+            throw new ConflitoException("Você já avaliou este livro");
+        }
+
         var livroAvaliado = livroRepository.findById(livroId)
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
         var usuario = usuarioRepository.findById(dados.usuarioId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
-        if (avaliacaoRepository.verificaUnicidade(livroAvaliado.getId(), usuario.getId()).isPresent()) {
-            throw new RuntimeException("O usuário já avaliou este livro.");
-        }
 
         var novaAvaliacao = new Avaliacao(livroAvaliado, usuario, dados);
         avaliacaoRepository.save(novaAvaliacao);

@@ -3,6 +3,7 @@ package com.minigoodreads.api.service;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLeitura;
 import com.minigoodreads.api.DTO.request.DadosNovaLeitura;
 import com.minigoodreads.api.DTO.response.DadosLeitura;
+import com.minigoodreads.api.exceptions.ConflitoException;
 import com.minigoodreads.api.models.ListaDeLeitura;
 import com.minigoodreads.api.models.StatusLeitura;
 import com.minigoodreads.api.repositories.ListaLeituraRepository;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ListaLeituraService {
 
@@ -24,10 +27,15 @@ public class ListaLeituraService {
     @Autowired private ListaLeituraRepository leituraRepository;
 
     public DadosLeitura adicionarLivroALista(Long usuarioId, DadosNovaLeitura dados) {
+        if (leituraRepository.existsByUsuarioIdAndLivroId(usuarioId, dados.livro_id())) {
+            throw new ConflitoException("Este livro já está na sua lista de leitura");
+        }
+
         var usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         var livro = livroRepository.findById(dados.livro_id())
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
+
         var status = StatusLeitura.toEnum(dados.status());
 
         var novaLeitura = new ListaDeLeitura(usuario, livro, status);

@@ -15,22 +15,22 @@ public class UsuarioController {
     @Autowired private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<?> adicionar(@RequestBody @Valid DadosNovoUsuario dados){
+    public ResponseEntity<DadosUsuario> adicionar(@RequestBody @Valid DadosNovoUsuario dados){
         return ResponseEntity.ok(usuarioService.registrarUsuario(dados));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalhar(@PathVariable Long id){
+    public ResponseEntity<DadosUsuario> detalhar(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.detalharUsuario(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoUsuario dados){
-        return ResponseEntity.ok(usuarioService.atualizar(id,dados));
+    public ResponseEntity<DadosUsuario> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoUsuario dados){
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(id,dados));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id){
-        return usuarioService.deletar(id);
+        return usuarioService.deletarUsuario(id);
     }
 
 
