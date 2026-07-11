@@ -46,7 +46,7 @@ public class Livro {
             this.genero = Genero.toEnum(dados.genero());
         }
         if (dados.anoPublicacao() != null)  {
-            this.titulo = dados.titulo();
+            this.anoPublicacao = dados.anoPublicacao();
         }
         if (dados.sinopse() != null)  {
             this.sinopse = dados.sinopse();
