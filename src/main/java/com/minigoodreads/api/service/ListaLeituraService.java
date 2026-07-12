@@ -51,14 +51,14 @@ public class ListaLeituraService {
     @Transactional
     public DadosLeitura editarLista(Long id, DadosAtualizacaoLeitura dados) {
         var leitura = leituraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Leitura não encontrada"));
         leitura.atualizarStatus(StatusLeitura.toEnum(dados.status()));
         return new DadosLeitura(leitura);
     }
 
     public ResponseEntity<?> deletarLeitura(Long id) {
         leituraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Leitura não encontrada"));
         leituraRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

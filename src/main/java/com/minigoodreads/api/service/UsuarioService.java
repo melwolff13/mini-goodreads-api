@@ -28,21 +28,21 @@ public class UsuarioService {
 
     public DadosUsuario detalharUsuario(Long id) {
         var dadosUsuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Digita certo aí"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         return new DadosUsuario(dadosUsuario);
     }
 
     @Transactional
     public DadosUsuario atualizarUsuario(Long id, DadosAtualizacaoUsuario dados) {
         var usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Digita certo ai"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         usuario.atualizar(dados);
         return new DadosUsuario(usuario);
     }
 
     public ResponseEntity<?> deletarUsuario(Long id) {
         usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Não achou..."));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         usuarioRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
