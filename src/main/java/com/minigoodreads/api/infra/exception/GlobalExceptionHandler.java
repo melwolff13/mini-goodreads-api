@@ -40,4 +40,10 @@ public class GlobalExceptionHandler {
         var erro = new DadosErro("CONFLICT", e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> tratarIllegalArgument(IllegalArgumentException e) {
+        var erro = new DadosErro("BAD_REQUEST", e.getMessage());
+        return ResponseEntity.badRequest().body(erro);
+    }
 }
