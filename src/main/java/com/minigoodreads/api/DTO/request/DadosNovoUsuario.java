@@ -9,5 +9,7 @@ public record DadosNovoUsuario(
         @NotBlank
         String nick,
         @NotBlank
-        String senha
+        String senha,
+        @NotBlank
+        String role
 ){}
