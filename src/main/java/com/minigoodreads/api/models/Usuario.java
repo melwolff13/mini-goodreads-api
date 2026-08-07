@@ -1,6 +1,5 @@
 package com.minigoodreads.api.models;
 
-import com.minigoodreads.api.DTO.request.DadosAtualizacaoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,15 +33,15 @@ public class Usuario implements UserDetails {
         this.senha = senha;
         this.role = role;
     }
-    public void atualizar(DadosAtualizacaoUsuario dados){
-        if(dados.email() != null){
-            this.email = dados.email();
+    public void atualizar(String email, String nick, String senhaCriptografada){
+        if(email != null){
+            this.email = email;
         }
-        if(dados.nick() != null){
-            this.nick = dados.nick();
+        if(nick != null){
+            this.nick = nick;
         }
-        if(dados.senha() != null){
-            this.senha = dados.senha();
+        if(senhaCriptografada != null){
+            this.senha = senhaCriptografada;
         }
     }
 

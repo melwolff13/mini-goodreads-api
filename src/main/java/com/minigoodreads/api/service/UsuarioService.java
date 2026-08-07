@@ -39,7 +39,10 @@ public class UsuarioService {
     public DadosUsuario atualizarUsuario(Long id, DadosAtualizacaoUsuario dados) {
         var usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
-        usuario.atualizar(dados);
+        String senhaCriptografada = dados.senha() != null
+                ? passwordEncoder.encode(dados.senha())
+                : null;
+        usuario.atualizar(dados.email(), dados.nick(), senhaCriptografada);
         return new DadosUsuario(usuario);
     }
 
