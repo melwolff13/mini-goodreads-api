@@ -15,8 +15,9 @@ INSERT INTO livros (titulo, autor, editora, genero, sinopse, ano_publicacao) VAL
     ('O Cortiço', 'Aluísio Azevedo', 'Garnier', 'DRAMA', 'A vida coletiva e as relações de poder em um cortiço no Rio de Janeiro do século XIX, retratando com realismo a luta pela sobrevivência e a degradação humana.', 1890),
     ('Jogador Número Um', 'Ernest Cline', 'Crown Publishers', 'FICCAO_CIENTIFICA', 'Em 2045, o mundo vive no OASIS, uma realidade virtual. Quando seu criador morre e esconde um tesouro no jogo, uma corrida global e perigosa tem início.', 2011);
 
-INSERT INTO usuarios (email, nick, senha) VALUES
-    ('joao@email.com', 'joaozinho', '123456'),
-    ('maria@email.com', 'mariazinha', '123456'),
-    ('carlos@email.com', 'carlao', '123456'),
-    ('ana@email.com', 'aninha', '123456');
+INSERT INTO usuarios (email, nick, senha, role) VALUES
+    ('admin@email.com', 'admin', '$2a$12$JGFg.SNxR.DXUjgGC1D.C.kQDydF/CPw1U2It5qbFiOJGGIKScD9S', 'ADMIN'), -- senha: admin123
+    ('joao@email.com', 'joaozinho', '$2a$12$yiF3YoqpP8Mhmgv0HF530.USRIXexaCG4GT0CK9RKBX5aFB7tVdXy', 'USER'), -- senha: 123456
+    ('maria@email.com', 'mariazinha', '$2a$12$yiF3YoqpP8Mhmgv0HF530.USRIXexaCG4GT0CK9RKBX5aFB7tVdXy', 'USER'),
+    ('carlos@email.com', 'carlao', '$2a$12$yiF3YoqpP8Mhmgv0HF530.USRIXexaCG4GT0CK9RKBX5aFB7tVdXy', 'USER'),
+    ('ana@email.com', 'aninha', '$2a$12$yiF3YoqpP8Mhmgv0HF530.USRIXexaCG4GT0CK9RKBX5aFB7tVdXy', 'USER');

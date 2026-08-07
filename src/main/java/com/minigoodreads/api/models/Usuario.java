@@ -24,6 +24,7 @@ public class Usuario implements UserDetails {
     private String email;
     private String nick;
     private String senha;
+    @Enumerated(value = EnumType.STRING)
     private UsuarioRole role;
 
 
