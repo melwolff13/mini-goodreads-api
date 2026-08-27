@@ -10,7 +10,5 @@ public record DadosNovaAvaliacao(
         @Min(value = 1)
         @Max(value = 5)
         Integer estrelas,
-        String comentario,
-        @NotNull
-        Long usuarioId
+        String comentario
 ) {}

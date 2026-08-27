@@ -5,6 +5,7 @@ import com.minigoodreads.api.DTO.response.DadosAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
 import com.minigoodreads.api.exceptions.ConflitoException;
 import com.minigoodreads.api.models.Avaliacao;
+import com.minigoodreads.api.models.Usuario;
 import com.minigoodreads.api.repositories.AvaliacaoRepository;
 import com.minigoodreads.api.repositories.LivroRepository;
 import com.minigoodreads.api.repositories.UsuarioRepository;
@@ -23,17 +24,15 @@ public class AvaliacaoService {
     @Autowired private LivroRepository livroRepository;
     @Autowired private UsuarioRepository usuarioRepository;
 
-    public DadosAvaliacao adicionarAvaliacao(Long livroId, DadosNovaAvaliacao dados) {
-        if (avaliacaoRepository.existsByLivroIdAndUsuarioId(livroId, dados.usuarioId())) {
+    public DadosAvaliacao adicionarAvaliacao(Usuario usuarioLogado, Long livroId, DadosNovaAvaliacao dados) {
+        if (avaliacaoRepository.existsByLivroIdAndUsuarioId(livroId, usuarioLogado.getId())) {
             throw new ConflitoException("Você já avaliou este livro");
         }
 
         var livroAvaliado = livroRepository.findById(livroId)
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
-        var usuario = usuarioRepository.findById(dados.usuarioId())
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        var novaAvaliacao = new Avaliacao(livroAvaliado, usuario, dados);
+        var novaAvaliacao = new Avaliacao(livroAvaliado, usuarioLogado, dados);
         avaliacaoRepository.save(novaAvaliacao);
 
         return new DadosAvaliacao(novaAvaliacao);

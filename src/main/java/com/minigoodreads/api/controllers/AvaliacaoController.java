@@ -3,6 +3,7 @@ package com.minigoodreads.api.controllers;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoAvaliacao;
 import com.minigoodreads.api.DTO.response.DadosAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
+import com.minigoodreads.api.models.Usuario;
 import com.minigoodreads.api.service.AvaliacaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +20,8 @@ public class AvaliacaoController {
     @Autowired private AvaliacaoService avaliacaoService;
 
     @PostMapping("/livros/{livroId}/avaliacoes")
-    public ResponseEntity<DadosAvaliacao> avaliar(@PathVariable Long livroId, @RequestBody @Valid DadosNovaAvaliacao dados) {
-        return ResponseEntity.ok(avaliacaoService.adicionarAvaliacao(livroId, dados));
+    public ResponseEntity<DadosAvaliacao> avaliar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long livroId, @RequestBody @Valid DadosNovaAvaliacao dados) {
+        return ResponseEntity.ok(avaliacaoService.adicionarAvaliacao(usuarioLogado, livroId, dados));
     }
 
     @GetMapping("/livros/{livroId}/avaliacoes")
