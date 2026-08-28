@@ -24,7 +24,7 @@ public class UsuarioService {
     public DadosUsuario registrarUsuario(DadosNovoUsuario dados) {
         verificaDadosCadastro(dados);
         String senhaCriptografada = passwordEncoder.encode(dados.senha());
-        var novoUsuario = new Usuario(dados.email(), dados.nick(), senhaCriptografada, UsuarioRole.valueOf(dados.role()));
+        var novoUsuario = new Usuario(dados.email(), dados.nick(), senhaCriptografada, UsuarioRole.USER);
         usuarioRepository.save(novoUsuario);
         return new DadosUsuario(novoUsuario);
     }
