@@ -12,9 +12,9 @@ public record DadosLivro(
         String sinopse,
         Integer anoPublicacao,
         Double notaMedia,
-        Integer totalAvaliacoes
+        Long totalAvaliacoes
 ) {
-    public DadosLivro(Livro livro, double notaMedia, int totalAvaliacoes) {
+    public DadosLivro(Livro livro, double notaMedia, long totalAvaliacoes) {
         this(
                 livro.getId(),
                 livro.getTitulo(),

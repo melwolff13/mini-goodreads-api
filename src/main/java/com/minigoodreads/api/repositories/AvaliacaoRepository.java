@@ -1,13 +1,12 @@
 package com.minigoodreads.api.repositories;
 
+import com.minigoodreads.api.DTO.AvaliacaoResumoDTO;
 import com.minigoodreads.api.models.Avaliacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao,Long> {
@@ -16,11 +15,8 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao,Long> {
 
     Page<Avaliacao> findAllByUsuarioId(Long usuarioId, Pageable paginacao);
 
-    @Query("select ROUND(AVG(a.estrelas), 2) from Avaliacao a where a.livro.id = :id")
-    Optional<Double> obterNotaMedia(Long id);
-
-    @Query("select COUNT(*) from Avaliacao a where a.livro.id = :id")
-    Integer obterTotalAvaliacoes(Long id);
+    @Query("select new com.minigoodreads.api.DTO.AvaliacaoResumoDTO(COUNT(*), ROUND(AVG(a.estrelas), 2)) from Avaliacao a where a.livro.id = :id")
+    AvaliacaoResumoDTO obterResumoAvaliacao(Long id);
 
     boolean existsByLivroIdAndUsuarioId(Long id, Long id1);
 }

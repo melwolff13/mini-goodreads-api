@@ -1,5 +1,6 @@
 package com.minigoodreads.api.service;
 
+import com.minigoodreads.api.DTO.AvaliacaoResumoDTO;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoLivro;
 import com.minigoodreads.api.DTO.request.LivroFiltro;
 import com.minigoodreads.api.DTO.response.DadosLivro;
@@ -32,9 +33,8 @@ public class LivroService {
     public DadosLivro detalharLivro(Long id) {
         var livro = livroRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
-        var notaMedia = obterNotaMedia(id);
-        var totalAvaliacoes = obterTotalAvaliacoes(id);
-        return new DadosLivro(livro, notaMedia, totalAvaliacoes);
+        var resumo = obterResumoAvaliacao(id);
+        return new DadosLivro(livro, resumo.notaMediaAvaliacoes(), resumo.totalAvaliacoes());
     }
 
     public Page<DadosResumoLivro> listarLivros(LivroFiltro filtro, Pageable paginacao) {
@@ -48,7 +48,8 @@ public class LivroService {
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
         livro.atualizarDados(dados);
 
-        return new DadosLivro(livro, obterNotaMedia(id), obterTotalAvaliacoes(id));
+        var resumo = obterResumoAvaliacao(id);
+        return new DadosLivro(livro, resumo.notaMediaAvaliacoes(), resumo.totalAvaliacoes());
     }
 
     public ResponseEntity<?> deletarLivro(Long id) {
@@ -59,11 +60,8 @@ public class LivroService {
         return ResponseEntity.noContent().build();
     }
 
-    private double obterNotaMedia(Long livroId) {
-        return avaliacaoRepository.obterNotaMedia(livroId).orElse(0.0);
+    private AvaliacaoResumoDTO obterResumoAvaliacao(Long id) {
+        return avaliacaoRepository.obterResumoAvaliacao(id);
     }
 
-    private int obterTotalAvaliacoes(Long livroId) {
-        return avaliacaoRepository.obterTotalAvaliacoes(livroId);
-    }
 }
