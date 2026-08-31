@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -19,9 +21,11 @@ public class Avaliacao {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "livro_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Livro livro;
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
     private int estrelas;
     private String comentario;

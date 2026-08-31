@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,12 +27,19 @@ public class Usuario implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private UsuarioRole role;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Avaliacao> avaliacoes;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ListaDeLeitura> leituras;
+
 
     public Usuario(String email, String nick, String senha, UsuarioRole role){
         this.email = email;
         this.nick = nick;
         this.senha = senha;
         this.role = role;
+        this.avaliacoes = new ArrayList<Avaliacao>();
+        this.leituras = new ArrayList<ListaDeLeitura>();
     }
     public void atualizar(String email, String nick, String senhaCriptografada){
         if(email != null){

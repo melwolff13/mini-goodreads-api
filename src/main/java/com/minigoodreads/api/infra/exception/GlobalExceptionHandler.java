@@ -4,6 +4,7 @@ import com.minigoodreads.api.exceptions.ConflitoException;
 import com.minigoodreads.api.exceptions.DadosErro;
 import com.minigoodreads.api.exceptions.RegraDeNegocioException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,4 +47,11 @@ public class GlobalExceptionHandler {
         var erro = new DadosErro("BAD_REQUEST", e.getMessage());
         return ResponseEntity.badRequest().body(erro);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> tratarIntegridade(DataIntegrityViolationException e) {
+        var erro = new DadosErro("CONFLICT", "Não foi possível concluir a operação por violação da integridade de dados");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
 }

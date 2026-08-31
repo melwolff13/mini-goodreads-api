@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "livros")
 @Data
@@ -22,6 +24,11 @@ public class Livro {
     private Genero genero;
     private String sinopse;
     private int anoPublicacao;
+
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ListaDeLeitura> listasDeLeitura;
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Avaliacao> avaliacoes;
 
     public Livro(DadosNovoLivro dados) {
         this.titulo = dados.titulo();
