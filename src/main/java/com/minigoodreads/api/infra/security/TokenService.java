@@ -22,7 +22,7 @@ public class TokenService {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("mini-goodreads-api")
-                    .withSubject(usuario.getNick())
+                    .withSubject(usuario.getId().toString())
                     .withExpiresAt(gerarDataExpiracao())
                     .sign(algoritmo);
             return token;
