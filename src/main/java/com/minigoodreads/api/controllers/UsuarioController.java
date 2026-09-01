@@ -3,10 +3,12 @@ package com.minigoodreads.api.controllers;
 import com.minigoodreads.api.DTO.request.DadosAtualizacaoUsuario;
 import com.minigoodreads.api.DTO.request.DadosNovoUsuario;
 import com.minigoodreads.api.DTO.response.DadosUsuario;
+import com.minigoodreads.api.models.Usuario;
 import com.minigoodreads.api.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,14 +25,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.detalharUsuario(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DadosUsuario> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoUsuario dados){
-        return ResponseEntity.ok(usuarioService.atualizarUsuario(id,dados));
+    @PutMapping
+    public ResponseEntity<DadosUsuario> atualizar(@AuthenticationPrincipal Usuario usuarioLogado, @RequestBody @Valid DadosAtualizacaoUsuario dados){
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioLogado.getId(), dados));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id){
-        return usuarioService.deletarUsuario(id);
+    @DeleteMapping("/{usuarioParaExcluirId}")
+    public ResponseEntity<?> deletar(@AuthenticationPrincipal Usuario usuarioLogado, Long usuarioParaExcluirId){
+        return usuarioService.deletarUsuario(usuarioLogado.getId(), usuarioParaExcluirId);
     }
 
 
