@@ -24,18 +24,18 @@ public class ListaLeituraController {
           return ResponseEntity.ok(leituraService.adicionarLivroALista(usuarioLogado, dados));
      }
 
-     @GetMapping("/usuarios/{usuarioId}/leitura")
+     @GetMapping("/usuarios/{usuarioId}/lista-de-leitura")
      public ResponseEntity<Page<DadosLeitura>> listar(@PathVariable Long usuarioId, @PageableDefault(size = 10, sort = "id") Pageable paginacao) {
           return ResponseEntity.ok(leituraService.exibirLista(usuarioId, paginacao));
      }
 
-     @PutMapping("/leitura/{id}")
-     public ResponseEntity<?> editar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoLeitura dados) {
-          return ResponseEntity.ok(leituraService.editarLista(id, dados));
+     @PutMapping("/leitura/{leituraId}")
+     public ResponseEntity<?> editar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long leituraId, @RequestBody @Valid DadosAtualizacaoLeitura dados) {
+          return ResponseEntity.ok(leituraService.editarLeitura(usuarioLogado.getId(), leituraId, dados));
      }
 
-     @DeleteMapping("/leitura/{id}")
-     public ResponseEntity<?> deletar(@PathVariable Long id) {
-          return leituraService.deletarLeitura(id);
+     @DeleteMapping("/leitura/{leituraId}")
+     public ResponseEntity<?> deletar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long leituraId) {
+          return leituraService.deletarLeitura(usuarioLogado.getId(), leituraId);
      }
 }

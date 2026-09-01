@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,17 +47,29 @@ public class ListaLeituraService {
     }
 
     @Transactional
-    public DadosLeitura editarLista(Long id, DadosAtualizacaoLeitura dados) {
-        var leitura = leituraRepository.findById(id)
+    public DadosLeitura editarLeitura(Long usuarioLogadoId, Long leituraId, DadosAtualizacaoLeitura dados) {
+        usuarioRepository.findById(usuarioLogadoId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        var leitura = leituraRepository.findById(leituraId)
                 .orElseThrow(() -> new EntityNotFoundException("Leitura não encontrada"));
-        leitura.atualizarStatus(StatusLeitura.toEnum(dados.status()));
-        return new DadosLeitura(leitura);
+
+        if (leitura.getUsuario().getId().equals(usuarioLogadoId)) {
+            leitura.atualizarStatus(StatusLeitura.toEnum(dados.status()));
+            return new DadosLeitura(leitura);
+        }
+
+        throw new AccessDeniedException("Você não tem permissão para editar esta lista de leitura");
     }
 
-    public ResponseEntity<?> deletarLeitura(Long id) {
-        leituraRepository.findById(id)
+    public ResponseEntity<?> deletarLeitura(Long usuarioLogadoId, Long leituraId) {
+        usuarioRepository.findById(usuarioLogadoId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        var leitura = leituraRepository.findById(leituraId)
                 .orElseThrow(() -> new EntityNotFoundException("Leitura não encontrada"));
-        leituraRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        if (leitura.getUsuario().getId().equals(usuarioLogadoId)) {
+            leituraRepository.deleteById(leituraId);
+            return ResponseEntity.noContent().build();
+        }
+        throw new AccessDeniedException("Você não tem permissão para deletar este item desta lista de leitura");
     }
 }
