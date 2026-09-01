@@ -21,7 +21,7 @@ public class AvaliacaoController {
 
     @PostMapping("/livros/{livroId}/avaliacoes")
     public ResponseEntity<DadosAvaliacao> avaliar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long livroId, @RequestBody @Valid DadosNovaAvaliacao dados) {
-        return ResponseEntity.ok(avaliacaoService.adicionarAvaliacao(usuarioLogado, livroId, dados));
+        return ResponseEntity.ok(avaliacaoService.adicionarAvaliacao(usuarioLogado.getId(), livroId, dados));
     }
 
     @GetMapping("/livros/{livroId}/avaliacoes")
@@ -34,13 +34,13 @@ public class AvaliacaoController {
         return ResponseEntity.ok(avaliacaoService.listarAvaliacoesPorUsuario(usuarioId, paginacao));
     }
 
-    @PutMapping("/avaliacoes/{id}")
-    public ResponseEntity<DadosAvaliacao> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoAvaliacao dados) {
-        return ResponseEntity.ok(avaliacaoService.atualizarInformacoes(id, dados));
+    @PutMapping("/avaliacoes/{avaliacaoId}")
+    public ResponseEntity<DadosAvaliacao> atualizar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long avaliacaoId, @RequestBody @Valid DadosAtualizacaoAvaliacao dados) {
+        return ResponseEntity.ok(avaliacaoService.atualizarInformacoes(usuarioLogado.getId(), avaliacaoId, dados));
     }
 
-    @DeleteMapping("/avaliacoes/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        return avaliacaoService.deletarAvaliacao(id);
+    @DeleteMapping("/avaliacoes/{avaliacaoId}")
+    public ResponseEntity<?> deletar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long avaliacaoId) {
+        return avaliacaoService.deletarAvaliacao(usuarioLogado.getId(), avaliacaoId);
     }
 }

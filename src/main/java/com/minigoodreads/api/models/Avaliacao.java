@@ -43,14 +43,16 @@ public class Avaliacao {
         this.data_edicao = null;
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoAvaliacao dados) {
-        if (dados.estrelas() != null) {
-            this.estrelas = dados.estrelas();
+    public void atualizarInformacoes(Integer estrelas, String comentario) {
+        if (estrelas != null || comentario != null) {
+            this.data_edicao = LocalDateTime.now();
+            this.editada = true;
         }
-        if (dados.comentario() != null) {
-            this.comentario = dados.comentario();
+        if (estrelas != null) {
+            this.estrelas = estrelas;
         }
-        this.data_edicao = LocalDateTime.now();
-        this.editada = true;
+        if (comentario != null) {
+            this.comentario = comentario;
+        }
     }
 }
