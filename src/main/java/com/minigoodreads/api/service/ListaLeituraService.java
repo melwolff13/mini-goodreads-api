@@ -27,11 +27,11 @@ public class ListaLeituraService {
     @Autowired private ListaLeituraRepository leituraRepository;
 
     public DadosLeitura adicionarLivroALista(Usuario usuarioLogado, DadosNovaLeitura dados) {
-        if (leituraRepository.existsByUsuarioIdAndLivroId(usuarioLogado.getId(), dados.livro_id())) {
+        if (leituraRepository.existsByUsuarioIdAndLivroId(usuarioLogado.getId(), dados.livroId())) {
             throw new ConflitoException("Este livro já está na sua lista de leitura");
         }
 
-        var livro = livroRepository.findById(dados.livro_id())
+        var livro = livroRepository.findById(dados.livroId())
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
 
         var status = StatusLeitura.toEnum(dados.status());

@@ -1,6 +1,5 @@
 package com.minigoodreads.api.models;
 
-import com.minigoodreads.api.DTO.request.DadosAtualizacaoAvaliacao;
 import com.minigoodreads.api.DTO.request.DadosNovaAvaliacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,23 +28,23 @@ public class Avaliacao {
     private Usuario usuario;
     private int estrelas;
     private String comentario;
-    private LocalDateTime data_publicacao;
+    private LocalDateTime dataPublicacao;
     private boolean editada;
-    private LocalDateTime data_edicao;
+    private LocalDateTime dataEdicao;
 
     public Avaliacao(Livro livro, Usuario usuario, DadosNovaAvaliacao dados) {
         this.comentario = dados.comentario();
         this.estrelas = dados.estrelas();
         this.livro = livro;
         this.usuario = usuario;
-        this.data_publicacao = LocalDateTime.now();
+        this.dataPublicacao = LocalDateTime.now();
         this.editada = false;
-        this.data_edicao = null;
+        this.dataEdicao = null;
     }
 
     public void atualizarInformacoes(Integer estrelas, String comentario) {
         if (estrelas != null || comentario != null) {
-            this.data_edicao = LocalDateTime.now();
+            this.dataEdicao = LocalDateTime.now();
             this.editada = true;
         }
         if (estrelas != null) {

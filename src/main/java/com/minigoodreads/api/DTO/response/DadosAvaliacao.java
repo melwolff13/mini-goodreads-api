@@ -6,24 +6,24 @@ import java.time.LocalDateTime;
 
 public record DadosAvaliacao(
         Long id,
-        LocalDateTime data_publicacao,
+        LocalDateTime dataPublicacao,
         Integer estrelas,
         String comentario,
         DadosUsuario usuario,
         DadosResumoLivro livro,
         Boolean editada,
-        LocalDateTime data_edicao
+        LocalDateTime dataEdicao
 ) {
     public DadosAvaliacao(Avaliacao avaliacao) {
         this(
                 avaliacao.getId(),
-                avaliacao.getData_publicacao(),
+                avaliacao.getDataPublicacao(),
                 avaliacao.getEstrelas(),
                 avaliacao.getComentario(),
                 new DadosUsuario(avaliacao.getUsuario()),
                 new DadosResumoLivro(avaliacao.getLivro()),
                 avaliacao.isEditada(),
-                avaliacao.getData_edicao()
+                avaliacao.getDataEdicao()
         );
     }
 }

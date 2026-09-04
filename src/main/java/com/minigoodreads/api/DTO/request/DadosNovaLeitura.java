@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosNovaLeitura(
         @NotNull
-        Long livro_id,
+        Long livroId,
         @NotNull
         String status
 ) {
