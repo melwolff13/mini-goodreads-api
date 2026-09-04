@@ -21,7 +21,9 @@ import java.util.List;
 public class Usuario implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String nick;
     private String senha;
     @Enumerated(value = EnumType.STRING)
