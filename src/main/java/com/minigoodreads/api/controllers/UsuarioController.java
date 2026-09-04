@@ -31,7 +31,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{usuarioParaExcluirId}")
-    public ResponseEntity<?> deletar(@AuthenticationPrincipal Usuario usuarioLogado, Long usuarioParaExcluirId){
+    public ResponseEntity<?> deletar(@AuthenticationPrincipal Usuario usuarioLogado, @PathVariable Long usuarioParaExcluirId){
         return usuarioService.deletarUsuario(usuarioLogado.getId(), usuarioParaExcluirId);
     }
 

@@ -25,7 +25,7 @@ public class UsuarioService {
     @Autowired private PasswordEncoder passwordEncoder;
 
     public DadosUsuario registrarUsuario(DadosNovoUsuario dados) {
-        verificaDados(dados);
+        verificaDados(dados, null);
         String senhaCriptografada = passwordEncoder.encode(dados.senha());
         var novoUsuario = new Usuario(dados.email(), dados.nick(), senhaCriptografada, UsuarioRole.USER);
         usuarioRepository.save(novoUsuario);
@@ -39,11 +39,11 @@ public class UsuarioService {
     }
 
     @Transactional
-    public DadosUsuario atualizarUsuario(Long id, DadosAtualizacaoUsuario dados) {
-        var usuario = usuarioRepository.findById(id)
+    public DadosUsuario atualizarUsuario(Long usuarioLogadoId, DadosAtualizacaoUsuario dados) {
+        var usuario = usuarioRepository.findById(usuarioLogadoId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        verificaDados(dados);
+        verificaDados(dados, usuarioLogadoId);
 
         String senhaCriptografada = dados.senha() != null
                 ? passwordEncoder.encode(dados.senha())
@@ -64,20 +64,20 @@ public class UsuarioService {
         if (usuarioLogadoId.equals(usuarioParaExcluirId) || usuarioLogado.getRole() == UsuarioRole.ADMIN) {
             usuarioRepository.deleteById(usuarioParaExcluirId);
         } else {
-            throw new AccessDeniedException("Você não tem permissão para deletar esta usuário");
+            throw new AccessDeniedException("Você não tem permissão para deletar este usuário");
         }
 
         return ResponseEntity.noContent().build();
     }
 
 
-    private void verificaDados(IDadosUsuario dados) {
+    private void verificaDados(IDadosUsuario dados, Long usuarioLogadoId) {
         var erros = new ArrayList<String>();
 
-        if (dados.email() != null && usuarioRepository.existsByEmail(dados.email())) {
+        if (dados.email() != null && usuarioRepository.existsByEmailAndIdNot(dados.email(), usuarioLogadoId)) {
             erros.add("Este e-mail já está sendo usado");
         }
-        if (dados.nick() != null && usuarioRepository.existsByNick(dados.nick())) {
+        if (dados.nick() != null && usuarioRepository.existsByNickAndIdNot(dados.nick(), usuarioLogadoId)) {
             erros.add("Este nick já está sendo usado");
         }
         if (dados.senha() != null && dados.senha().length() < 6) {
