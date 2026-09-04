@@ -55,8 +55,8 @@ public class AvaliacaoService {
         var avaliacao = avaliacaoRepository.findById(avaliacaoId)
                 .orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));
 
-        var estrelas = dados.estrelas().equals(avaliacao.getEstrelas()) ? null : dados.estrelas();
-        var comentario = dados.comentario().equals(avaliacao.getComentario()) ? null : dados.comentario();
+        var estrelas = dados.estrelas() != null && !dados.estrelas().equals(avaliacao.getEstrelas()) ? dados.estrelas() : null;
+        var comentario = dados.comentario() != null && !dados.comentario().equals(avaliacao.getComentario()) ? dados.comentario() : null;
 
         if (avaliacao.getUsuario().getId().equals(usuarioLogadoId)) {
             avaliacao.atualizarInformacoes(estrelas, comentario);
