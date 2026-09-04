@@ -5,6 +5,6 @@ import com.minigoodreads.api.models.Genero;
 public record LivroFiltro(
         String titulo,
         String autor,
-        Genero genero,
+        String genero,
         Integer anoPublicacao
 ) {}

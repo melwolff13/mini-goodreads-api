@@ -27,11 +27,11 @@ public class LivroSpec {
             if (filtro.genero() != null) {
                 predicados.add(cb.equal(
                         root.get("genero"),
-                        filtro.genero()
+                        Genero.toEnum(filtro.genero())
                 ));
             }
             if (filtro.anoPublicacao() != null) {
-                predicados.add(cb.ge(
+                predicados.add(cb.equal(
                         root.get("anoPublicacao"),
                         filtro.anoPublicacao()
                 ));
